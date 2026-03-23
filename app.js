@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require("path");
-const app = express();
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
+const app = express();
 const PORT = process.env.PORT || 3000;
 
 const Campground = require("./models/campground");
@@ -17,7 +18,8 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "src")));
+app.use("/static/", express.static(path.join(__dirname, "src")));
+app.use(methodOverride("_method"));
 
 app.get("/", (req, res) => {
   res.render("index");
@@ -46,6 +48,36 @@ app.get("/campgrounds/:id", async (req, res) => {
   const foundCampground = await Campground.findById(id);
 
   res.render("campgrounds/show", { foundCampground });
+});
+
+app.get("/campgrounds/:id/edit", async (req, res) => {
+  const { id } = req.params;
+  const foundCampground = await Campground.findById(id);
+
+  res.render("campgrounds/edit", { foundCampground });
+});
+
+app.put("/campgrounds/:id", async (req, res) => {
+  const { id } = req.params;
+  const editedCampground = await Campground.findByIdAndUpdate(
+    id,
+    { ...req.body.campground },
+    {
+      runValidators: true,
+      new: true,
+    },
+  );
+
+  res.redirect(`/campgrounds/${id}`);
+});
+
+app.delete("/campgrounds/:id", async (req, res) => {
+  const { id } = req.params;
+  const deletedCampground = await Campground.findByIdAndDelete(id);
+
+  console.log(deletedCampground);
+
+  res.redirect("/campgrounds");
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
