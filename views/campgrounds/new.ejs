@@ -1,23 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Campground</title>
-  </head>
-  <body>
-    <form action="/campgrounds" method="POST">
-      <div>
-        <label for="title">Campground Title</label>
-        <input type="text" name="campground[title]" id="title" />
-      </div>
+<%- layout('layouts/bolierplate') %>
+<form action="/campgrounds" method="POST">
+  <div>
+    <label for="title">Campground Title</label>
+    <input type="text" name="campground[title]" id="title" />
+  </div>
 
-      <div>
-        <label for="location">Location</label>
-        <input type="text" name="campground[location]" id="location" />
-      </div>
+  <div>
+    <label for="location">Location</label>
+    <input type="text" name="campground[location]" id="location" />
+  </div>
 
-      <button type="submit">Add Campground</button>
-    </form>
-  </body>
-</html>
+  <button type="submit">Add Campground</button>
+</form>
