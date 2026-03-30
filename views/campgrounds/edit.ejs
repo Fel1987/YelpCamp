@@ -4,8 +4,10 @@
   <h1 class="text-center">Edit Campground</h1>
   <div class="col-6 offset-3">
     <form
+      class="validated-form"
       action="/campgrounds/<%= foundCampground.id %>?_method=PUT"
       method="POST"
+      novalidate
     >
       <div class="mb-3">
         <label class="form-label" for="title">Campground Title</label>
@@ -15,6 +17,7 @@
           type="text"
           name="campground[title]"
           id="title"
+          required
         />
       </div>
 
@@ -26,6 +29,7 @@
           type="text"
           name="campground[location]"
           id="location"
+          required
         />
       </div>
 
@@ -37,6 +41,7 @@
           type="text"
           name="campground[image]"
           id="image"
+          required
         />
       </div>
 
@@ -46,6 +51,7 @@
           class="form-control"
           id="description"
           name="campground[description]"
+          required
         >
 <%= foundCampground.description %></textarea
         >
@@ -61,6 +67,7 @@
             class="form-control"
             name="campground[price]"
             id="price"
+            required
           />
         </div>
       </div>
