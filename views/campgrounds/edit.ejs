@@ -1,27 +1,78 @@
 <%- layout('layouts/bolierplate') %>
-<form action="/campgrounds/<%= foundCampground.id %>?_method=PUT" method="POST">
-  <div>
-    <label for="title">Campground Title</label>
-    <input
-      type="text"
-      name="campground[title]"
-      id="title"
-      placeholder="<%= foundCampground.title %>"
-      value="<%= foundCampground.title %>"
-    />
-  </div>
 
-  <div>
-    <label for="location">Location</label>
-    <input
-      type="text"
-      name="campground[location]"
-      id="location"
-      placeholder="<%= foundCampground.location %>"
-      value="<%= foundCampground.location %>"
-    />
-  </div>
+<div class="row">
+  <h1 class="text-center">Edit Campground</h1>
+  <div class="col-6 offset-3">
+    <form
+      action="/campgrounds/<%= foundCampground.id %>?_method=PUT"
+      method="POST"
+    >
+      <div class="mb-3">
+        <label class="form-label" for="title">Campground Title</label>
+        <input
+          value="<%= foundCampground.title %>"
+          class="form-control"
+          type="text"
+          name="campground[title]"
+          id="title"
+        />
+      </div>
 
-  <button type="submit">Save changes</button>
-</form>
-<a href="/campgrounds/<%= foundCampground.id %>">Cancel</a>
+      <div class="mb-3">
+        <label class="form-label" for="location">Location</label>
+        <input
+          value="<%= foundCampground.location %>"
+          class="form-control"
+          type="text"
+          name="campground[location]"
+          id="location"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="image">Image Url</label>
+        <input
+          value="<%= foundCampground.image %>"
+          class="form-control"
+          type="text"
+          name="campground[image]"
+          id="image"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="description">Description</label>
+        <textarea
+          class="form-control"
+          id="description"
+          name="campground[description]"
+        >
+<%= foundCampground.description %></textarea
+        >
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="price">Price</label>
+        <div class="input-group">
+          <span class="input-group-text">$</span>
+          <input
+            value="<%= foundCampground.price %>"
+            type="number"
+            class="form-control"
+            name="campground[price]"
+            id="price"
+          />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <button class="btn btn-info text-light" type="submit">
+          Save changes
+        </button>
+      </div>
+    </form>
+    <a class="btn btn-danger" href="/campgrounds/<%= foundCampground.id %>"
+      >Cancel</a
+    >
+  </div>
+</div>

@@ -1,12 +1,34 @@
 <%- layout('layouts/bolierplate') %>
-<h1><%= foundCampground.title %></h1>
-<h2><%= foundCampground.location %></h2>
-<a href="/campgrounds/<%= foundCampground.id %>/edit">Edit Campground</a>
-<form
-  action="/campgrounds/<%= foundCampground.id %>?_method=DELETE"
-  method="POST"
->
-  <button type="submit">Delete this campground</button>
-</form>
 
-<footer><a href="/campgrounds">All Campgrounds</a></footer>
+<div class="col-6 offset-3">
+  <div class="card mb-3">
+    <img src="<%= foundCampground.image %>" alt="" />
+    <div class="card-body">
+      <h5 class="card-title"><%= foundCampground.title %></h5>
+      <p class="card-text"><%= foundCampground.description %></p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item text-secondary">
+        <%= foundCampground.location %>
+      </li>
+      <li class="list-group-item"><%= foundCampground.title %></li>
+      <li class="list-group-item">$<%= foundCampground.price %>/night</li>
+    </ul>
+    <div class="card-body">
+      <a
+        class="card-link btn btn-info text-light"
+        href="/campgrounds/<%= foundCampground.id %>/edit"
+        >Edit Campground</a
+      >
+      <form
+        class="d-inline"
+        action="/campgrounds/<%= foundCampground.id %>?_method=DELETE"
+        method="POST"
+      >
+        <button class="btn btn-danger" type="submit">
+          Delete this campground
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

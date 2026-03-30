@@ -9,7 +9,8 @@ mongoose
 const seedCities = async () => {
   await Campground.insertOne({
     title: "Test Title",
-    price: "Test Price",
+    price: 100,
+    image: `https://picsum.photos/400?random=${Math.random()}`,
     description: "Test Description",
     location: "Test Location",
   });

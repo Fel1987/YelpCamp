@@ -1,10 +1,24 @@
   <%- layout('layouts/bolierplate') %>
   <h1>All Campgrounds</h1>
     <div><a href="campgrounds/new">Create New campground</a></div>
-        <ul>
-            <% campgrounds.forEach(campground => { %>
-                <li> 
-                <a href="/campgrounds/<%= campground.id %>"><%= campground.title %></a>
-                </li>
-            <% }) %>
-        </ul>
+ 
+        <% campgrounds.forEach(campground => { %>
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="img-fluid" src="<%= campground.image || "https://dummyimage.com/400x400/ccc/fff&text=Placeholder+Image"%>" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= campground.title %></h5>
+                            <p class="card-text"><%= campground.description %></p>
+                            <p class="card-text">
+                                <small class="text-secondary"><%= campground.location %></small>
+                            </p>
+                            <a class="btn btn-primary" href="/campgrounds/<%= campground.id %>">View <strong><%= campground.title %></strong></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+   
