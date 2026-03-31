@@ -5,12 +5,27 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utilities/ExpressError");
 const catchAsync = require("./utilities/catchAsync");
+const Joi = require("joi");
+const { campgroundBodySchema } = require("./schemas");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 const Campground = require("./models/campground");
 
 const db = mongoose.connection;
+
+const validatedCampground = (req, res, next) => {
+  const { error } = campgroundBodySchema.validate(req.body);
+
+  if (error) {
+    const errorMessage = error.details
+      .map((detail) => detail.message)
+      .join(",");
+    throw new ExpressError(errorMessage, 400);
+  } else {
+    next();
+  }
+};
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/yelp-camp")
@@ -43,6 +58,7 @@ app.get("/campgrounds/new", (req, res) => {
 
 app.post(
   "/campgrounds",
+  validatedCampground,
   catchAsync(async (req, res, next) => {
     const newCampground = new Campground(req.body.campground);
     await newCampground.save();
@@ -70,6 +86,7 @@ app.get(
 
 app.put(
   "/campgrounds/:id",
+  validatedCampground,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const editedCampground = await Campground.findByIdAndUpdate(
@@ -95,10 +112,15 @@ app.delete(
   }),
 );
 
+app.all("/{*path}", (req, res, next) => {
+  next(new ExpressError("Resource not found", 404));
+});
+
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Something went wrong" } = err;
+  if (!err.message) err.message = "Something Went Wrong!";
 
-  res.send("Something went wrong");
+  res.status(statusCode).render("error", { err });
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
