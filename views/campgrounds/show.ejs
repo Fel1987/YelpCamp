@@ -1,34 +1,88 @@
 <%- layout('layouts/bolierplate') %>
 
-<div class="col-6 offset-3">
-  <div class="card mb-3">
-    <img src="<%= foundCampground.image %>" alt="" />
-    <div class="card-body">
-      <h5 class="card-title"><%= foundCampground.title %></h5>
-      <p class="card-text"><%= foundCampground.description %></p>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item text-secondary">
-        <%= foundCampground.location %>
-      </li>
-      <li class="list-group-item"><%= foundCampground.title %></li>
-      <li class="list-group-item">$<%= foundCampground.price %>/night</li>
-    </ul>
-    <div class="card-body">
-      <a
-        class="card-link btn btn-info text-light"
-        href="/campgrounds/<%= foundCampground.id %>/edit"
-        >Edit Campground</a
-      >
-      <form
-        class="d-inline"
-        action="/campgrounds/<%= foundCampground.id %>?_method=DELETE"
-        method="POST"
-      >
-        <button class="btn btn-danger" type="submit">
-          Delete this campground
-        </button>
-      </form>
+
+
+<div class="row">
+  <div class="col-6">
+    <div class="card mb-3">
+      <img src="<%= foundCampground.image %>" alt="" />
+      <div class="card-body">
+        <h5 class="card-title"><%= foundCampground.title %></h5>
+        <p class="card-text"><%= foundCampground.description %></p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-secondary">
+          <%= foundCampground.location %>
+        </li>
+        <li class="list-group-item"><%= foundCampground.title %></li>
+        <li class="list-group-item">$<%= foundCampground.price %>/night</li>
+      </ul>
+      <div class="card-body">
+        <a
+          class="card-link btn btn-info text-light"
+          href="/campgrounds/<%= foundCampground.id %>/edit"
+        >
+          Edit Campground
+        </a>
+        <form
+          class="d-inline"
+          action="/campgrounds/<%= foundCampground.id %>?_method=DELETE"
+          method="POST"
+        >
+          <button class="btn btn-danger" type="submit">
+            Delete this campground
+          </button>
+        </form>
+      </div>
     </div>
   </div>
+
+  <aside class="col-6">
+    <h3>Leave a Review</h3>
+    <form
+      class="validated-form mb-3"
+      action="/campgrounds/<%= foundCampground._id %>/review"
+      method="POST"
+      novalidate
+    >
+      <div class="mb-3">
+        <label class="form-label" for="rating">Rating</label>
+        <input
+          class="form-range"
+          type="range"
+          name="review[rating]"
+          id="rating"
+          min="1"
+          max="5"
+          step="1"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="body">Review:</label>
+        <textarea
+          class="form-control"
+          name="review[body]"
+          id="body"
+          rows="4"
+          required
+        ></textarea>
+        <div class="invalid-feedback">Please write a review</div>
+      </div>
+
+      <button class="btn btn-success" type="submit">Submit</button>
+    </form>
+
+    <% foundCampground.reviews.reverse().forEach(review => { %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Rating: <%= review.rating %></h5>
+          <p class="card-text">Review: <%= review.body %></p>
+          <form action="/campgrounds/<%= foundCampground._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  </aside>
 </div>
