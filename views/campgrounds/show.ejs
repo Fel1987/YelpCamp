@@ -5,28 +5,28 @@
 <div class="row">
   <div class="col-6">
     <div class="card mb-3">
-      <img src="<%= foundCampground.image %>" alt="" />
+      <img src="<%= campground.image %>" alt="" />
       <div class="card-body">
-        <h5 class="card-title"><%= foundCampground.title %></h5>
-        <p class="card-text"><%= foundCampground.description %></p>
+        <h5 class="card-title"><%= campground.title %></h5>
+        <p class="card-text"><%= campground.description %></p>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item text-secondary">
-          <%= foundCampground.location %>
+          <%= campground.location %>
         </li>
-        <li class="list-group-item"><%= foundCampground.title %></li>
-        <li class="list-group-item">$<%= foundCampground.price %>/night</li>
+        <li class="list-group-item"><%= campground.title %></li>
+        <li class="list-group-item">$<%= campground.price %>/night</li>
       </ul>
       <div class="card-body">
         <a
           class="card-link btn btn-info text-light"
-          href="/campgrounds/<%= foundCampground.id %>/edit"
+          href="/campgrounds/<%= campground.id %>/edit"
         >
           Edit Campground
         </a>
         <form
           class="d-inline"
-          action="/campgrounds/<%= foundCampground.id %>?_method=DELETE"
+          action="/campgrounds/<%= campground.id %>?_method=DELETE"
           method="POST"
         >
           <button class="btn btn-danger" type="submit">
@@ -41,7 +41,7 @@
     <h3>Leave a Review</h3>
     <form
       class="validated-form mb-3"
-      action="/campgrounds/<%= foundCampground._id %>/review"
+      action="/campgrounds/<%= campground._id %>/review"
       method="POST"
       novalidate
     >
@@ -73,12 +73,12 @@
       <button class="btn btn-success" type="submit">Submit</button>
     </form>
 
-    <% foundCampground.reviews.reverse().forEach(review => { %>
+    <% campground.reviews.reverse().forEach(review => { %>
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Rating: <%= review.rating %></h5>
           <p class="card-text">Review: <%= review.body %></p>
-          <form action="/campgrounds/<%= foundCampground._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+          <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
             <button class="btn btn-sm btn-danger">Delete</button>
           </form>
         </div>
