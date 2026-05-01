@@ -13,7 +13,9 @@
   </head>
   <body class="d-flex flex-column min-vh-100">
     <%- include('../partials/header.ejs') %>
-    <main class="container mt-5 flex-grow-1"><%- body %></main>
+    <main class="container mt-5 flex-grow-1">
+      <%- include('../partials/flash.ejs') %> <%- body %>
+    </main>
     <%- include('../partials/footer.ejs') %>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
